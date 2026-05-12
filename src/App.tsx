@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 import { 
   Calendar, 
@@ -44,7 +44,7 @@ const DEFAULT_DETAILS = {
   ]
 };
 
-const Section = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+const Section = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
   <motion.section 
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
