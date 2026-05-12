@@ -77,32 +77,37 @@ export default function App() {
     setIsPlaying(true);
   };
 
-  const addToCalendar = () => {
+  const [showCalendarMenu, setShowCalendarMenu] = useState(false);
+
+  const getCalendarLinks = () => {
     const title = `Boda de ${DEFAULT_DETAILS.brideName} & ${DEFAULT_DETAILS.groomName}`;
     const description = `¡Estamos muy emocionados de compartir este día tan especial con ustedes!\n\nCeremonia: ${DEFAULT_DETAILS.churchName}\nRecepción: ${DEFAULT_DETAILS.location}`;
     const location = `${DEFAULT_DETAILS.location}, ${DEFAULT_DETAILS.address}`;
-    
-    // Formato de fecha para ICS: YYYYMMDDTHHMMSS
-    // Inicio: 1 de Agosto 2026 a las 15:00
-    // Fin: 1 de Agosto 2026 a las 23:59
+    const startDate = "20260801T150000";
+    const endDate = "20260801T235900";
+
+    return {
+      google: `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}&sf=true&output=xml`,
+      outlook: `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(title)}&startdt=2026-08-01T15:00:00&enddt=2026-08-01T23:59:00&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`,
+    };
+  };
+
+  const downloadICS = () => {
+    const title = `Boda de ${DEFAULT_DETAILS.brideName} & ${DEFAULT_DETAILS.groomName}`;
+    const description = `¡Estamos muy emocionados de compartir este día tan especial con ustedes!\n\nCeremonia: ${DEFAULT_DETAILS.churchName}\nRecepción: ${DEFAULT_DETAILS.location}`;
+    const location = `${DEFAULT_DETAILS.location}, ${DEFAULT_DETAILS.address}`;
     const startDate = "20260801T150000";
     const endDate = "20260801T235900";
 
     const icsContent = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
-      "PRODID:-//Claudia y Esau//Invitacion de Boda//ES",
       "BEGIN:VEVENT",
       `DTSTART:${startDate}`,
       `DTEND:${endDate}`,
       `SUMMARY:${title}`,
       `DESCRIPTION:${description.replace(/\n/g, '\\n')}`,
       `LOCATION:${location}`,
-      "BEGIN:VALARM",
-      "TRIGGER:-PT1440M", // Recordatorio 1 día antes
-      "ACTION:DISPLAY",
-      "DESCRIPTION:Reminder",
-      "END:VALARM",
       "END:VEVENT",
       "END:VCALENDAR"
     ].join("\n");
@@ -115,7 +120,6 @@ export default function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
   };
 
   const scaleX = useSpring(scrollYProgress, {
@@ -423,12 +427,45 @@ export default function App() {
               >
                 Confirmar por WhatsApp
               </a>
-              <button 
-                onClick={addToCalendar}
-                className="w-full md:w-auto px-12 py-6 border border-white/20 text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-sm hover:bg-white/10 transition-all"
-              >
-                Añadir al Calendario
-              </button>
+              
+              <div className="relative w-full md:w-auto">
+                <button 
+                  onClick={() => setShowCalendarMenu(!showCalendarMenu)}
+                  className="w-full md:w-auto px-12 py-6 border border-white/20 text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-sm hover:bg-white/10 transition-all"
+                >
+                  Añadir al Calendario
+                </button>
+
+                <AnimatePresence>
+                  {showCalendarMenu && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute bottom-full left-0 right-0 mb-4 bg-white shadow-2xl rounded-lg overflow-hidden z-50 py-2 border border-neutral-100 min-w-[200px]"
+                    >
+                      <button 
+                        onClick={() => { window.open(getCalendarLinks().google, '_blank'); setShowCalendarMenu(false); }}
+                        className="w-full px-6 py-4 text-left text-[10px] uppercase tracking-widest text-neutral-600 font-bold hover:bg-neutral-50 flex items-center gap-3 transition-colors border-b border-neutral-50"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-blue-500" /> Google Calendar
+                      </button>
+                      <button 
+                        onClick={() => { window.open(getCalendarLinks().outlook, '_blank'); setShowCalendarMenu(false); }}
+                        className="w-full px-6 py-4 text-left text-[10px] uppercase tracking-widest text-neutral-600 font-bold hover:bg-neutral-50 flex items-center gap-3 transition-colors border-b border-neutral-50"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-blue-400" /> Outlook
+                      </button>
+                      <button 
+                        onClick={() => { downloadICS(); setShowCalendarMenu(false); }}
+                        className="w-full px-6 py-4 text-left text-[10px] uppercase tracking-widest text-neutral-600 font-bold hover:bg-neutral-50 flex items-center gap-3 transition-colors"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-neutral-400" /> Apple / Otros (ICS)
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             <div className="pt-24 opacity-30 flex flex-col items-center gap-6">
