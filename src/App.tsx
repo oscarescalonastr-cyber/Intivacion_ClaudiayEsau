@@ -20,8 +20,10 @@ const DEFAULT_DETAILS = {
   time: "3:00 PM",
   churchName: "Parroquia Nuestra Señora del Rosario",
   churchAddress: "Av. Hidalgo 9, Centro, 42130 Mineral del Monte, Hgo.",
+  churchMapsUrl: "https://maps.app.goo.gl/HLdHKna6ZjZGibQ67", // REEMPLAZA CON EL LINK DE LA IGLESIA
   churchTime: "3:00 PM",
   location: "Hacienda Real de Velasco",
+  venueMapsUrl: "https://maps.app.goo.gl/jXMSx9vsgomciXHG7", // REEMPLAZA CON EL LINK DEL SALÓN
   address: "DE VELASCO #S/N, Centro, 43560 Omitlán de Juárez, Hgo.",
   message: "Con la bendición de Dios y de nuestros padres, tenemos el honor de invitarte a celebrar nuestro amor.",
   rsvpDeadline: "24 de Septiembre",
@@ -318,8 +320,9 @@ export default function App() {
                     <Clock className="w-3 h-3" /> {DEFAULT_DETAILS.churchTime}
                   </p>
                   <a 
-                    href={`https://maps.google.com/?q=${encodeURIComponent(DEFAULT_DETAILS.churchAddress)}`}
+                    href={DEFAULT_DETAILS.churchMapsUrl}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block mt-4 text-[10px] uppercase tracking-widest font-bold text-[#cfa461] border-b border-[#cfa461] pb-1"
                   >
                     Ver Ubicación
@@ -337,8 +340,9 @@ export default function App() {
                     <Clock className="w-3 h-3" /> {DEFAULT_DETAILS.time}
                   </p>
                   <a 
-                    href={`https://maps.google.com/?q=${encodeURIComponent(DEFAULT_DETAILS.address)}`}
+                    href={DEFAULT_DETAILS.venueMapsUrl}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block mt-4 text-[10px] uppercase tracking-widest font-bold text-[#cfa461] border-b border-[#cfa461] pb-1"
                   >
                     Ver Ubicación
