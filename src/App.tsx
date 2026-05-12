@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useSpring } from 'motion/react';
+import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 import { 
   Calendar, 
   MapPin, 
@@ -26,16 +26,16 @@ const DEFAULT_DETAILS = {
   message: "Con la bendición de Dios y de nuestros padres, tenemos el honor de invitarte a celebrar nuestro amor.",
   rsvpDeadline: "24 de Septiembre",
   parents: {
-    bride: ["Sr. Roberto Silva", "Sra. Elena de Silva"],
-    groom: ["Sr. Miguel Herrera", "Sra. Carmen de Herrera"]
+    bride: ["Sr. Armando Galindo Cervantes", "Sra. Lucero Estrada Sandoval"],
+    groom: ["Sr. Celedonio Calixtro Cortés", "Sra. Simplicia Vargas Rosales"]
   },
   dressCode: "Formal - Etiqueta",
   giftRegistry: [
-    { type: 'Amazon', details: 'Mesa de Regalos: Ana & Carlos' },
+    { type: 'Amazon', details: 'Mesa de Regalos: Claudia & Esau' },
     { type: 'Liverpool', details: 'Código: 50492831' }
   ],
   whatsappRSVP: "+521234567890",
-  musicUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
+  musicUrl: "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/M_1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
   images: [
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-26.jpg", // Hero
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-6.jpg", // Story
@@ -57,6 +57,7 @@ const Section = ({ children, className = "" }: { children: React.ReactNode; clas
 );
 
 export default function App() {
+  const [hasStarted, setHasStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { scrollYProgress } = useScroll();
@@ -70,6 +71,11 @@ export default function App() {
       }
     }
   }, [isPlaying]);
+
+  const startInvitation = () => {
+    setHasStarted(true);
+    setIsPlaying(true);
+  };
 
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -85,8 +91,60 @@ export default function App() {
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@100..900&display=swap');
           .font-serif { font-family: 'Playfair Display', serif; }
           .font-sans { font-family: 'Montserrat', sans-serif; }
+          .text-shadow-sm { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         `}
       </style>
+
+      {/* Screen Overlay - Entry */}
+      <AnimatePresence>
+        {!hasStarted && (
+          <motion.div 
+            initial={{ opacity: 1 }}
+            exit={{ 
+              opacity: 0,
+              scale: 1.1,
+              backgroundColor: "#ffffff",
+              transition: { duration: 1.2, delay: 0.8, ease: "easeInOut" }
+            }}
+            className="fixed inset-0 z-[200] bg-[#fcfaf7] flex flex-col items-center justify-center text-center px-6"
+          >
+            {/* Envelope Container */}
+            <div className="relative w-full max-w-sm aspect-[4/3] bg-white shadow-2xl flex flex-col items-center justify-end pb-12 border border-neutral-100 mt-[-50px]">
+              
+              {/* Top Flap (Animated) */}
+              <motion.div 
+                className="absolute top-0 left-0 right-0 h-1/2 bg-[#fcfaf7] border-b border-[#cfa461]/20 origin-top z-10"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)', transformStyle: 'preserve-3d' }}
+                animate={hasStarted ? { rotateX: -160, zIndex: 0 } : { rotateX: 0 }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              />
+
+              {/* Envelope Body (Shadow effect) */}
+              <div className="absolute inset-0 bg-[#fff] z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%)' }} />
+
+              {/* Content Inside Envelope */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-4 relative z-[5]"
+              >
+                <button 
+                  onClick={startInvitation}
+                  className="group relative px-8 py-3 overflow-hidden shadow-lg"
+                >
+                  <div className="absolute inset-0 bg-[#cfa461] transition-transform duration-500 group-hover:scale-105" />
+                  <span className="relative text-white text-[9px] uppercase tracking-[0.4em] font-bold">Abrir Invitación</span>
+                </button>
+                <p className="text-[8px] uppercase tracking-widest opacity-30 italic">Cargando música...</p>
+              </motion.div>
+
+              {/* Bottom/Side Flaps (Static appearance) */}
+              <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-white/50 border-t border-[#cfa461]/10 pointer-events-none" style={{ clipPath: 'polygon(0 100%, 100% 100%, 50% 0)' }} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Progress Bar */}
       <motion.div 
@@ -267,7 +325,6 @@ export default function App() {
                 referrerPolicy="no-referrer"
               />
             </motion.div>
-            <div className="absolute -bottom-8 -left-8 w-32 h-32 border border-[#cfa461]/30 hidden md:block" />
           </div>
         </Section>
       </div>
@@ -332,8 +389,8 @@ export default function App() {
 
             <div className="pt-24 opacity-30 flex flex-col items-center gap-6">
                <div className="h-px w-20 bg-white" />
-               <p className="font-serif text-2xl italic">Ana & Carlos</p>
-               <p className="text-[9px] tracking-[0.5em] uppercase">Octubre 2026</p>
+               <p className="font-serif text-2xl italic">Claudia & Esau</p>
+               <p className="text-[9px] tracking-[0.5em] uppercase">Agosto 2026</p>
             </div>
           </motion.div>
         </Section>
