@@ -79,17 +79,43 @@ export default function App() {
 
   const addToCalendar = () => {
     const title = `Boda de ${DEFAULT_DETAILS.brideName} & ${DEFAULT_DETAILS.groomName}`;
-    const details = `¡Estamos muy emocionados de compartir este día tan especial con ustedes!\n\nCeremonia: ${DEFAULT_DETAILS.churchName}\nRecepción: ${DEFAULT_DETAILS.location}`;
+    const description = `¡Estamos muy emocionados de compartir este día tan especial con ustedes!\n\nCeremonia: ${DEFAULT_DETAILS.churchName}\nRecepción: ${DEFAULT_DETAILS.location}`;
     const location = `${DEFAULT_DETAILS.location}, ${DEFAULT_DETAILS.address}`;
     
-    // Date format: YYYYMMDDTHHMMSSZ
-    // August 1, 2026, 3:00 PM (15:00) to 11:00 PM (23:00)
+    // Formato de fecha para ICS: YYYYMMDDTHHMMSS
+    // Inicio: 1 de Agosto 2026 a las 15:00
+    // Fin: 1 de Agosto 2026 a las 23:59
     const startDate = "20260801T150000";
-    const endDate = "20260801T230000";
-    
-    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}&sf=true&output=xml`;
-    
-    window.open(googleCalendarUrl, '_blank');
+    const endDate = "20260801T235900";
+
+    const icsContent = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Claudia y Esau//Invitacion de Boda//ES",
+      "BEGIN:VEVENT",
+      `DTSTART:${startDate}`,
+      `DTEND:${endDate}`,
+      `SUMMARY:${title}`,
+      `DESCRIPTION:${description.replace(/\n/g, '\\n')}`,
+      `LOCATION:${location}`,
+      "BEGIN:VALARM",
+      "TRIGGER:-PT1440M", // Recordatorio 1 día antes
+      "ACTION:DISPLAY",
+      "DESCRIPTION:Reminder",
+      "END:VALARM",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\n");
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'boda-claudia-y-esau.ics');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
   };
 
   const scaleX = useSpring(scrollYProgress, {
