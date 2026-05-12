@@ -77,6 +77,21 @@ export default function App() {
     setIsPlaying(true);
   };
 
+  const addToCalendar = () => {
+    const title = `Boda de ${DEFAULT_DETAILS.brideName} & ${DEFAULT_DETAILS.groomName}`;
+    const details = `¡Estamos muy emocionados de compartir este día tan especial con ustedes!\n\nCeremonia: ${DEFAULT_DETAILS.churchName}\nRecepción: ${DEFAULT_DETAILS.location}`;
+    const location = `${DEFAULT_DETAILS.location}, ${DEFAULT_DETAILS.address}`;
+    
+    // Date format: YYYYMMDDTHHMMSSZ
+    // August 1, 2026, 3:00 PM (15:00) to 11:00 PM (23:00)
+    const startDate = "20260801T150000";
+    const endDate = "20260801T230000";
+    
+    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}&sf=true&output=xml`;
+    
+    window.open(googleCalendarUrl, '_blank');
+  };
+
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -382,7 +397,10 @@ export default function App() {
               >
                 Confirmar por WhatsApp
               </a>
-              <button className="w-full md:w-auto px-12 py-6 border border-white/20 text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-sm hover:bg-white/10 transition-all">
+              <button 
+                onClick={addToCalendar}
+                className="w-full md:w-auto px-12 py-6 border border-white/20 text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-sm hover:bg-white/10 transition-all"
+              >
                 Añadir al Calendario
               </button>
             </div>
