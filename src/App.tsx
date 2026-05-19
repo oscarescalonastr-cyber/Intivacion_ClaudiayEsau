@@ -36,7 +36,7 @@ const DEFAULT_DETAILS = {
     { type: 'Amazon', details: 'Mesa de Regalos: Claudia & Esau' },
     { type: 'Liverpool', details: 'Código: 50492831' }
   ],
-  whatsappRSVP: "+521234567890",
+  whatsappRSVP: "+527791088581",
   musicUrl: "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/M_1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
   images: [
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-26.jpg", // Hero
