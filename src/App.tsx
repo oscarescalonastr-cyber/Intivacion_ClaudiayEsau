@@ -122,11 +122,7 @@ export default function App() {
   const getWhatsAppLink = (phone: string, text: string) => {
     const cleanPhone = phone.replace(/\D/g, '');
     const encodedText = encodeURIComponent(text);
-    if (isMobile) {
-      return `whatsapp://send?phone=${cleanPhone}&text=${encodedText}`;
-    } else {
-      return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
-    }
+    return `https://wa.me/${cleanPhone}?text=${encodedText}`;
   };
 
   useEffect(() => {
@@ -627,7 +623,7 @@ export default function App() {
               {/* Bride Button */}
               <a 
                 href={getWhatsAppLink(DEFAULT_DETAILS.whatsappBride, '¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}
-                target={isMobile ? "_self" : "_blank"}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
               >
@@ -639,12 +635,12 @@ export default function App() {
                 <div className="w-full h-11 pl-16 pr-[20px] ml-3 bg-[#cfa461] group-hover:bg-[#b08b52] rounded-full flex items-center justify-center text-white text-[11px] uppercase tracking-[0.18em] font-sans font-bold shadow-md z-10 transition-colors">
                   Número de la novia
                 </div>
-              </a>
+               </a>
 
               {/* Groom Button */}
               <a 
                 href={getWhatsAppLink(DEFAULT_DETAILS.whatsappGroom, '¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}
-                target={isMobile ? "_self" : "_blank"}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
               >
