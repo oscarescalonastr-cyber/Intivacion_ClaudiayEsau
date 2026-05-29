@@ -111,8 +111,22 @@ const Section = ({ children, className = "" }: { children: ReactNode; className?
 export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    setIsMobile(/Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+  }, []);
+
+  const getWhatsAppUrl = (phone: string, text: string) => {
+    const cleanPhone = phone.replace(/\D/g, '');
+    const encodedText = encodeURIComponent(text);
+    if (isMobile) {
+      return `whatsapp://send?phone=${cleanPhone}&text=${encodedText}`;
+    }
+    return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
+  };
 
   useEffect(() => {
     if (audioRef.current) {
@@ -611,7 +625,7 @@ export default function App() {
             <div className="pt-4 flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center px-4">
               {/* Bride Button */}
               <a 
-                href={`https://api.whatsapp.com/send?phone=${DEFAULT_DETAILS.whatsappBride.replace(/\D/g, '')}&text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
+                href={getWhatsAppUrl(DEFAULT_DETAILS.whatsappBride, '¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
@@ -628,7 +642,7 @@ export default function App() {
 
               {/* Groom Button */}
               <a 
-                href={`https://api.whatsapp.com/send?phone=${DEFAULT_DETAILS.whatsappGroom.replace(/\D/g, '')}&text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
+                href={getWhatsAppUrl(DEFAULT_DETAILS.whatsappGroom, '¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
