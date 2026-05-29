@@ -31,32 +31,6 @@ const WhatsAppIcon = ({ className = "w-5 h-5 flex-shrink-0 text-white" }: { clas
   </svg>
 );
 
-const handleWhatsAppClick = (event: MouseEvent<HTMLAnchorElement>, phone: string, text: string) => {
-  event.preventDefault();
-  const cleanPhone = phone.replace(/\D/g, '');
-  const encodedText = encodeURIComponent(text);
-  
-  // Custom deep link protocol (whatsapp://) bypasses browser web views and opens native app directly on mobile
-  const deepLink = `whatsapp://send?phone=${cleanPhone}&text=${encodedText}`;
-  const webLink = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
-  
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  if (isMobile) {
-    window.location.href = deepLink;
-    
-    // Optional fallback if for some reason native app isn't registered or didn't open
-    setTimeout(() => {
-      if (document.hasFocus()) {
-        window.open(webLink, '_blank', 'noopener,noreferrer');
-      }
-    }, 1500);
-  } else {
-    // Desktop flows: opens in new browser tab
-    window.open(webLink, '_blank', 'noopener,noreferrer');
-  }
-};
-
 const DEFAULT_DETAILS = {
   brideName: "Claudia Galindo Estrada",
   groomName: "Esaú Calixtro Vargas",
@@ -137,8 +111,23 @@ const Section = ({ children, className = "" }: { children: ReactNode; className?
 export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+  }, []);
+
+  const getWhatsAppLink = (phone: string, text: string) => {
+    const cleanPhone = phone.replace(/\D/g, '');
+    const encodedText = encodeURIComponent(text);
+    if (isMobile) {
+      return `whatsapp://send?phone=${cleanPhone}&text=${encodedText}`;
+    } else {
+      return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
+    }
+  };
 
   useEffect(() => {
     if (audioRef.current) {
@@ -637,9 +626,8 @@ export default function App() {
             <div className="pt-4 flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center px-4">
               {/* Bride Button */}
               <a 
-                href={`https://api.whatsapp.com/send?phone=${DEFAULT_DETAILS.whatsappBride.replace(/\D/g, '')}&text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
-                onClick={(e) => handleWhatsAppClick(e, DEFAULT_DETAILS.whatsappBride, '¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}
-                target="_blank"
+                href={getWhatsAppLink(DEFAULT_DETAILS.whatsappBride, '¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}
+                target={isMobile ? "_self" : "_blank"}
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
               >
@@ -655,9 +643,8 @@ export default function App() {
 
               {/* Groom Button */}
               <a 
-                href={`https://api.whatsapp.com/send?phone=${DEFAULT_DETAILS.whatsappGroom.replace(/\D/g, '')}&text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
-                onClick={(e) => handleWhatsAppClick(e, DEFAULT_DETAILS.whatsappGroom, '¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}
-                target="_blank"
+                href={getWhatsAppLink(DEFAULT_DETAILS.whatsappGroom, '¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}
+                target={isMobile ? "_self" : "_blank"}
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
               >
