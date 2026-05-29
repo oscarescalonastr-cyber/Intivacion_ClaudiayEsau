@@ -611,7 +611,7 @@ export default function App() {
             <div className="pt-4 flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center px-4">
               {/* Bride Button */}
               <a 
-                href={`https://wa.me/${DEFAULT_DETAILS.whatsappBride}?text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
+                href={`https://api.whatsapp.com/send?phone=${DEFAULT_DETAILS.whatsappBride.replace(/\D/g, '')}&text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
@@ -628,7 +628,7 @@ export default function App() {
 
               {/* Groom Button */}
               <a 
-                href={`https://wa.me/${DEFAULT_DETAILS.whatsappGroom}?text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
+                href={`https://api.whatsapp.com/send?phone=${DEFAULT_DETAILS.whatsappGroom.replace(/\D/g, '')}&text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
@@ -651,8 +651,13 @@ export default function App() {
 
       {/* FINAL COUPLE PHOTO WITH OVERLAY TORN EDGES */}
       <div className="relative w-full h-[450px] md:h-[600px] overflow-hidden bg-[#fcfaf7]">
-        {/* Full-bleed Photo */}
-        <div className="absolute inset-0 z-0">
+        {/* Full-bleed Photo with celebration animation */}
+        <motion.div 
+          whileInView={{ y: 0, opacity: 1 }}
+          initial={{ y: 50, opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0 z-0"
+        >
           <img 
             src={DEFAULT_DETAILS.images[3]} 
             className="w-full h-full object-cover object-center scale-105"
@@ -661,7 +666,7 @@ export default function App() {
           />
           {/* Subtle vignette on top of the image for elegant contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/25" />
-        </div>
+        </motion.div>
 
         {/* Top Paper Tear Overlay (blends with light background above) */}
         <div className="absolute top-0 inset-x-0 z-10 pointer-events-none select-none h-16 overflow-hidden">
