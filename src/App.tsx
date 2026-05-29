@@ -16,8 +16,20 @@ import {
   Utensils,
   Home,
   Sparkles,
-  Baby
+  Baby,
+  Copy,
+  Check
 } from 'lucide-react';
+
+const WhatsAppIcon = ({ className = "w-5 h-5 flex-shrink-0 text-white" }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 448 512" 
+    className={`${className} fill-current`}
+  >
+    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L3 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.4-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+  </svg>
+);
 
 const DEFAULT_DETAILS = {
   brideName: "Claudia Galindo Estrada",
@@ -38,19 +50,16 @@ const DEFAULT_DETAILS = {
     groom: ["Sr. Celedonio Calixtro Cortés", "Sra. Simplicia Vargas Rosales"]
   },
   dressCode: "Formal - Etiqueta",
-  giftRegistry: [
-    { type: 'Amazon', details: 'Mesa de Regalos: Claudia & Esau' },
-    { type: 'Liverpool', details: 'Código: 50492831' }
-  ],
-  whatsappRSVP: "+527791088581",
+  liverpoolCode: "52010923", // EDITA AQUÍ EL CÓDIGO DE TU MESA DE REGALOS DE LIVERPOOL
+  liverpoolUrl: "https://mesaderegalos.liverpool.com.mx/milistaderegalos/52010923/", // REEMPLAZA CON EL EL LINK DIRECTO A TU MESA DE REGALOS (ej. https://mesaderegalos.liverpool.com.mx/m/evento-claudia-y-esau)
   whatsappBride: "+527791088581",
-  whatsappGroom: "+527791088581",
+  whatsappGroom: "+527711958350",
   musicUrl: "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/M_1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
   images: [
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-26.jpg", // Hero
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-6.jpg", // Story
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_27.jpg", // Details
-    "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-22.jpg"  // Final
+    "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_28.jpg"  // Final
   ]
 };
 
@@ -121,6 +130,7 @@ export default function App() {
   };
 
   const [showCalendarMenu, setShowCalendarMenu] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const getCalendarLinks = () => {
     const title = `Boda de ${DEFAULT_DETAILS.brideName} & ${DEFAULT_DETAILS.groomName}`;
@@ -433,47 +443,37 @@ export default function App() {
           <div className="absolute left-[30px] md:left-1/2 top-4 bottom-4 w-[1.5px] bg-[#cfa461]/30 -translate-x-[0.75px]" />
 
           {/* Items Container */}
-          <div className="space-y-12 md:space-y-16 relative">
+          <div className="space-y-8 md:space-y-10 relative">
             {ITINERARY_ITEMS.map((item, idx) => {
               const IconComponent = item.icon;
               const isEven = idx % 2 === 0;
               return (
-                <div key={idx} className="relative flex flex-col md:flex-row items-stretch">
-                  {/* Heart node centered on the timeline line */}
-                  <div className="absolute left-[30px] md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                    <div className="w-10 h-10 rounded-full bg-[#fcfaf7] border border-[#cfa461]/40 flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-115">
-                      <Heart className="w-3.5 h-3.5 text-[#cfa461] fill-[#cfa461]" />
+                <div key={idx} className="relative flex flex-col md:flex-row items-center group py-2">
+                  {/* Icon node centered on the timeline line (replaces the heart) */}
+                  <div className="absolute left-[30px] md:left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300">
+                    <div className="w-11 h-11 rounded-full bg-white border border-[#cfa461]/45 flex items-center justify-center shadow-sm transition-transform duration-500 group-hover:scale-110 group-hover:bg-[#fcfaf7] group-hover:border-[#cfa461]">
+                      <IconComponent className="w-5 h-5 text-[#a37f45] stroke-[1.3] group-hover:text-[#8f6d37] transition-colors" />
                     </div>
                   </div>
 
-                  {/* Alternating wrapper structure */}
-                  <div className="w-full flex flex-col md:flex-row items-stretch">
+                  {/* Alternating wrapper structure with elegant content */}
+                  <div className="w-full flex flex-col md:flex-row items-center">
                     {/* Even indexes on Left column (Desktop), hidden on desktop for Odd indexes */}
-                    <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pr-16 flex md:justify-end text-left md:text-right ${isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
-                      <div className="flex flex-col items-start md:items-end space-y-1.5">
-                        <div className="p-4 bg-white/70 border border-[#f0e8de] rounded-full text-[#cfa461] shadow-sm hover:border-[#cfa461] transition-all duration-300">
-                          <IconComponent className="w-8 h-8 stroke-[1.2]" />
-                        </div>
-                        <div className="space-y-0.5">
-                          <h3 className="font-serif text-xl md:text-2xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
-                          <p className="font-serif text-sm text-[#cfa461] mt-0.5">{item.time}</p>
-                        </div>
+                    <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pr-14 flex md:justify-end text-left md:text-right ${isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
+                      <div className="space-y-0.5">
+                        <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-[#cfa461] font-bold">{item.time}</p>
+                        <h3 className="font-serif text-lg md:text-xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
                       </div>
                     </div>
 
-                    {/* Gap spacing on desktop */}
+                    {/* Gap spacing on desktop to keep timeline balanced */}
                     <div className="hidden md:block w-16" />
 
                     {/* Odd indexes on Right column (Desktop), hidden on desktop for Even indexes */}
-                    <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pl-16 flex justify-start text-left ${!isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
-                      <div className="flex flex-col items-start space-y-1.5">
-                        <div className="p-4 bg-white/70 border border-[#f0e8de] rounded-full text-[#cfa461] shadow-sm hover:border-[#cfa461] transition-all duration-300">
-                          <IconComponent className="w-8 h-8 stroke-[1.2]" />
-                        </div>
-                        <div className="space-y-0.5">
-                          <h3 className="font-serif text-xl md:text-2xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
-                          <p className="font-serif text-sm text-[#cfa461] mt-0.5">{item.time}</p>
-                        </div>
+                    <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pl-14 flex justify-start text-left ${!isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
+                      <div className="space-y-0.5">
+                        <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-[#cfa461] font-bold">{item.time}</p>
+                        <h3 className="font-serif text-lg md:text-xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
                       </div>
                     </div>
                   </div>
@@ -485,15 +485,21 @@ export default function App() {
       </Section>
 
       {/* NO NIÑOS */}
-      <Section className="py-16 max-w-2xl mx-auto px-4">
-        <div className="bg-white p-10 rounded-sm border border-[#f0e8de] text-center space-y-6 shadow-sm hover:border-[#cfa461]/40 transition-colors">
-          <div className="w-16 h-16 rounded-full bg-[#fcfaf7] border border-[#f0e8de] flex items-center justify-center text-[#cfa461] mx-auto shadow-sm">
-            <Baby className="w-8 h-8 stroke-[1.2]" />
+      <Section className="py-10 max-w-lg mx-auto px-4">
+        <div className="bg-[#fcfaf7] p-6 rounded-xl border border-[#f5ece0] text-center space-y-4 shadow-sm hover:border-[#cfa461]/35 hover:bg-[#faf6f0] transition-all duration-500 relative overflow-hidden group">
+          {/* Subtle elegant corners */}
+          <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-[#cfa461]/30 rounded-tl pointer-events-none" />
+          <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#cfa461]/30 rounded-tr pointer-events-none" />
+          <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-[#cfa461]/30 rounded-bl pointer-events-none" />
+          <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-[#cfa461]/30 rounded-br pointer-events-none" />
+          
+          <div className="w-12 h-12 rounded-full bg-white border border-[#f0e8de] flex items-center justify-center text-[#cfa461] mx-auto shadow-sm group-hover:scale-105 transition-transform duration-500">
+            <Baby className="w-5 h-5 stroke-[1.2]" />
           </div>
-          <div className="space-y-3">
-            <h3 className="font-serif text-3xl text-neutral-800 tracking-wide font-medium">No niños</h3>
-            <p className="text-sm opacity-70 max-w-lg mx-auto italic leading-relaxed text-neutral-600 font-serif">
-              Apreciamos a tus peques, sin embargo, este evento será solo para adultos, esperamos no sea impedimento para que nos puedan acompañar.
+          <div className="space-y-2">
+            <h3 className="font-serif text-lg text-neutral-800 tracking-widest uppercase font-medium">Solo Adultos</h3>
+            <p className="text-xs text-neutral-600 font-serif leading-relaxed max-w-sm mx-auto italic px-2">
+              Apreciamos a tus peques, sin embargo, este evento será solo para adultos. Esperamos de corazón que esto no sea impedimento para que nos acompañen.
             </p>
           </div>
         </div>
@@ -504,19 +510,80 @@ export default function App() {
         <div className="space-y-4">
           <Gift className="w-7 h-7 text-[#cfa461] mx-auto" />
           <h2 className="font-serif text-5xl">Mesa de Regalos</h2>
-          <p className="text-sm opacity-50 max-w-sm mx-auto italic leading-relaxed">
-            Agradecemos mucho su cariño. Si desean tener un detalle con nosotros, estas son nuestras opciones:
+          <p className="text-sm opacity-60 max-w-sm mx-auto italic leading-relaxed text-neutral-600 font-serif">
+            Agradecemos mucho su cariño y buenos deseos. Si desean tener un detalle con nosotros, ponemos a su disposición nuestra mesa de regalos:
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          {DEFAULT_DETAILS.giftRegistry.map((item, idx) => (
-            <div key={idx} className="bg-white p-10 rounded-sm border border-[#f0e8de] hover:border-[#cfa461]/30 transition-colors group">
-              <h4 className="text-[10px] uppercase tracking-widest font-bold text-[#cfa461] mb-2">{item.type}</h4>
-              <p className="font-serif text-xl mb-4">{item.details}</p>
-              <button className="text-[10px] uppercase tracking-widest font-bold border-b border-transparent group-hover:border-[#cfa461] transition-all pb-1">Ver mesa</button>
+        <div className="max-w-md mx-auto">
+          <div className="bg-white p-6 md:p-8 rounded-xl border border-[#f0e8de] shadow-md hover:shadow-lg hover:border-[#cfa461]/40 transition-all duration-500 relative overflow-hidden group">
+            {/* Background elegant decoration */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#cfa461]/5 to-transparent rounded-bl-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-[#cfa461]/5 to-transparent rounded-tr-full pointer-events-none" />
+            
+            {/* Elegant Inner Frame */}
+            <div className="border border-[#cfa461]/25 p-6 rounded-lg space-y-6 relative z-10">
+              
+              {/* Brand Header */}
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-[#cfa461] block">Mesa de Regalos</span>
+                <span className="font-serif text-2xl tracking-wide text-neutral-800 font-medium block">Liverpool</span>
+              </div>
+
+              {/* Decorative divider separator */}
+              <div className="flex items-center justify-center gap-3">
+                <div className="h-px w-8 bg-[#cfa461]/30" />
+                <Gift className="w-4 h-4 text-[#cfa461] opacity-70" />
+                <div className="h-px w-8 bg-[#cfa461]/30" />
+              </div>
+
+              {/* Code Container */}
+              <div className="bg-[#fcfaf7] p-5 rounded-lg border border-[#f5ece0] relative group/code transition-colors hover:bg-[#faf6f0]">
+                <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-bold mb-1.5">Código del Evento</p>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="font-serif text-3xl md:text-4xl text-neutral-800 font-normal tracking-wider">
+                    {DEFAULT_DETAILS.liverpoolCode}
+                  </span>
+                </div>
+              </div>
+
+              {/* Buttons Container */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                {/* Copy Code Button */}
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(DEFAULT_DETAILS.liverpoolCode);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#fcfaf7] hover:bg-[#cfa461]/10 border border-[#cfa461]/40 text-neutral-700 text-xs tracking-wider uppercase font-sans font-bold transition-all duration-300 shadow-sm active:scale-95 cursor-pointer whitespace-nowrap"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
+                      <span className="text-emerald-700 font-bold">¡Copiado!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-[#a37f45]" />
+                      <span>Copiar Código</span>
+                    </>
+                  )}
+                </button>
+
+                {/* Visit Site Button */}
+                <a 
+                  href={DEFAULT_DETAILS.liverpoolUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-[#cfa461] hover:bg-[#b08b52] text-white text-xs tracking-wider uppercase font-sans font-bold transition-all duration-300 shadow-md active:scale-95 whitespace-nowrap"
+                >
+                  <span>Ir a la tienda</span>
+                </a>
+              </div>
+
             </div>
-          ))}
+          </div>
         </div>
       </Section>
 
@@ -541,20 +608,20 @@ export default function App() {
               </p>
             </div>
 
-            <div className="pt-4 flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <div className="pt-4 flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center px-4">
               {/* Bride Button */}
               <a 
                 href={`https://wa.me/${DEFAULT_DETAILS.whatsappBride}?text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center group transition-all duration-300 hover:scale-105"
+                className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
               >
-                {/* Circle with leaf/whatsapp background */}
-                <div className="w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md relative z-20 transition-colors">
-                  <MessageCircle className="w-6 h-6 fill-white text-[#a37f45] group-hover:text-[#8f6d37]" />
+                {/* Circle on the left */}
+                <div className="absolute left-0 w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md z-20 transition-all duration-300 border-2 border-white">
+                  <WhatsAppIcon className="w-[21px] h-6 text-white" />
                 </div>
-                {/* Pill right part */}
-                <div className="h-11 pl-8 pr-10 -ml-3 bg-[#cfa461] hover:bg-[#b08b52] rounded-r-auto rounded-3xl flex items-center justify-center text-white text-[11px] uppercase tracking-[0.15em] font-sans font-bold shadow-md relative z-10 transition-colors">
+                {/* Pill on the right */}
+                <div className="w-full h-11 pl-16 pr-[20px] ml-3 bg-[#cfa461] group-hover:bg-[#b08b52] rounded-full flex items-center justify-center text-white text-[11px] uppercase tracking-[0.18em] font-sans font-bold shadow-md z-10 transition-colors">
                   Número de la novia
                 </div>
               </a>
@@ -564,14 +631,14 @@ export default function App() {
                 href={`https://wa.me/${DEFAULT_DETAILS.whatsappGroom}?text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center group transition-all duration-300 hover:scale-105"
+                className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
               >
-                {/* Circle with leaf/whatsapp background */}
-                <div className="w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md relative z-20 transition-colors">
-                  <MessageCircle className="w-6 h-6 fill-white text-[#a37f45] group-hover:text-[#8f6d37]" />
+                {/* Circle on the left */}
+                <div className="absolute left-0 w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md z-20 transition-all duration-300 border-2 border-white">
+                  <WhatsAppIcon className="w-[21px] h-6 text-white" />
                 </div>
-                {/* Pill right part */}
-                <div className="h-11 pl-8 pr-14 -ml-3 bg-[#cfa461] hover:bg-[#b08b52] rounded-r-auto rounded-3xl flex items-center justify-center text-white text-[11px] uppercase tracking-[0.15em] font-sans font-bold shadow-md relative z-10 transition-colors">
+                {/* Pill on the right */}
+                <div className="w-full h-11 pl-16 pr-[20px] ml-3 bg-[#cfa461] group-hover:bg-[#b08b52] rounded-full flex items-center justify-center text-white text-[11px] uppercase tracking-[0.18em] font-sans font-bold shadow-md z-10 transition-colors">
                   Número del novio
                 </div>
               </a>
@@ -597,25 +664,62 @@ export default function App() {
         </div>
 
         {/* Top Paper Tear Overlay (blends with light background above) */}
-        <div className="absolute top-0 inset-x-0 z-10 pointer-events-none select-none h-12 overflow-hidden">
+        <div className="absolute top-0 inset-x-0 z-10 pointer-events-none select-none h-16 overflow-hidden">
           <svg 
             viewBox="0 0 1200 120" 
             preserveAspectRatio="none" 
-            className="absolute inset-x-0 top-0 block w-full h-[48px] fill-[#fcfaf7]"
-            style={{ transform: 'rotate(180deg)' }}
+            className="absolute inset-x-0 -top-4 block w-full h-[80px]"
+            style={{ transform: 'rotate(180deg)', filter: 'drop-shadow(0px -5px 6px rgba(0,0,0,0.22))' }}
           >
-            <path d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" />
+            <defs>
+              <filter id="paper-tear-top">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </defs>
+            {/* White inner fiber exposed layer for top paper tear */}
+            <path 
+              d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" 
+              fill="#ffffff" 
+              filter="url(#paper-tear-top)"
+              style={{ transform: 'translateY(-2px)' }}
+            />
+            {/* Main paper sheet layer top */}
+            <path 
+              d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" 
+              fill="#fcfaf7" 
+              filter="url(#paper-tear-top)"
+            />
           </svg>
         </div>
 
         {/* Bottom Paper Tear Overlay (blends with light background below) */}
-        <div className="absolute bottom-0 inset-x-0 z-10 pointer-events-none select-none h-12 overflow-hidden">
+        <div className="absolute bottom-0 inset-x-0 z-10 pointer-events-none select-none h-16 overflow-hidden">
           <svg 
             viewBox="0 0 1200 120" 
             preserveAspectRatio="none" 
-            className="absolute inset-x-0 bottom-0 block w-full h-[48px] fill-[#fcfaf7]"
+            className="absolute inset-x-0 -bottom-4 block w-full h-[80px]"
+            style={{ filter: 'drop-shadow(0px 5px 6px rgba(0,0,0,0.22))' }}
           >
-            <path d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" />
+            <defs>
+              <filter id="paper-tear-bottom">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </defs>
+            {/* White inner fiber exposed layer for bottom paper tear */}
+            <path 
+              d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" 
+              fill="#ffffff" 
+              filter="url(#paper-tear-bottom)"
+              style={{ transform: 'translateY(-2px)' }}
+            />
+            {/* Main paper sheet layer bottom */}
+            <path 
+              d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" 
+              fill="#fcfaf7" 
+              filter="url(#paper-tear-bottom)"
+            />
           </svg>
         </div>
       </div>
@@ -650,12 +754,6 @@ export default function App() {
                   C <span className="text-xl text-[#cfa461]">♥</span> E
                 </p>
               </div>
-            </div>
-
-            <div className="space-y-4">
-              <p className="font-serif text-3xl md:text-4xl italic tracking-wide text-neutral-800 font-medium">Claudia & Esaú</p>
-              <div className="h-px w-16 bg-[#cfa461] mx-auto opacity-70" />
-              <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-[#cfa461] font-bold">{DEFAULT_DETAILS.date}</p>
             </div>
           </motion.div>
         </Section>
