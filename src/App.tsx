@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactNode } from 'react';
+import { useState, useEffect, useRef, ReactNode, MouseEvent } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 import { 
   Calendar, 
@@ -119,13 +119,34 @@ export default function App() {
     setIsMobile(/Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
   }, []);
 
-  const getWhatsAppUrl = (phone: string, text: string) => {
+  const handleWhatsAppClick = (e: MouseEvent<HTMLAnchorElement>, phone: string, text: string) => {
+    e.preventDefault();
     const cleanPhone = phone.replace(/\D/g, '');
     const encodedText = encodeURIComponent(text);
-    if (isMobile) {
-      return `whatsapp://send?phone=${cleanPhone}&text=${encodedText}`;
+    
+    // Check if user is on mobile
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const isMobileDevice = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    
+    if (isMobileDevice) {
+      // On mobile, use the native whatsapp:// scheme in the same window (prevents blank Safari page issue)
+      window.location.href = `whatsapp://send?phone=${cleanPhone}&text=${encodedText}`;
+      
+      // Setup a backup link to open the wa.me redirect if the native app does not open in 1.5 seconds
+      const backupTimeout = setTimeout(() => {
+        window.open(`https://wa.me/${cleanPhone}?text=${encodedText}`, '_blank');
+      }, 1500);
+      
+      // Clear timeout if the window loses focus (meaning WhatsApp was opened successfully)
+      const handleBlur = () => {
+        clearTimeout(backupTimeout);
+        window.removeEventListener('blur', handleBlur);
+      };
+      window.addEventListener('blur', handleBlur);
+    } else {
+      // On desktop, use the secure, official wa.me shortlink which triggers WhatsApp Web/Desktop perfectly
+      window.open(`https://wa.me/${cleanPhone}?text=${encodedText}`, '_blank');
     }
-    return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodedText}`;
   };
 
   useEffect(() => {
@@ -625,7 +646,8 @@ export default function App() {
             <div className="pt-4 flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center px-4">
               {/* Bride Button */}
               <a 
-                href={getWhatsAppUrl(DEFAULT_DETAILS.whatsappBride, '¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}
+                href={`https://wa.me/${DEFAULT_DETAILS.whatsappBride.replace(/\D/g, '')}?text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
+                onClick={(e) => handleWhatsAppClick(e, DEFAULT_DETAILS.whatsappBride, '¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
@@ -642,7 +664,8 @@ export default function App() {
 
               {/* Groom Button */}
               <a 
-                href={getWhatsAppUrl(DEFAULT_DETAILS.whatsappGroom, '¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}
+                href={`https://wa.me/${DEFAULT_DETAILS.whatsappGroom.replace(/\D/g, '')}?text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
+                onClick={(e) => handleWhatsAppClick(e, DEFAULT_DETAILS.whatsappGroom, '¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative group inline-flex items-center w-full md:w-[260px] h-14 hover:scale-105 transition-all duration-300"
