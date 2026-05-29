@@ -115,6 +115,38 @@ export default function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { scrollYProgress } = useScroll();
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    isOver: false
+  });
+
+  useEffect(() => {
+    const targetDate = new Date('2026-08-01T15:00:00');
+
+    const updateTimer = () => {
+      const now = new Date();
+      const difference = targetDate.getTime() - now.getTime();
+
+      if (difference <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true });
+      } else {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((difference / 1000 / 60) % 60);
+        const seconds = Math.floor((difference / 1000) % 60);
+        setTimeLeft({ days, hours, minutes, seconds, isOver: false });
+      }
+    };
+
+    updateTimer();
+    const timerId = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(timerId);
+  }, []);
+
   useEffect(() => {
     setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
   }, []);
@@ -313,13 +345,83 @@ export default function App() {
         </motion.div>
       </header>
 
+      {/* CONTADOR DE TIEMPO (COUNTDOWN) - OPCIÓN 2 */}
+      <div className="bg-[#fcfaf7] pt-24 pb-12">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="space-y-8"
+          >
+            <div className="flex flex-col items-center">
+              <div className="h-[1px] w-20 bg-[#cfa461]/35 mb-6" />
+              <span className="text-[#cfa461] text-[11px] uppercase tracking-[0.35em] font-sans font-bold mb-3 block">
+                Comienza la cuenta regresiva
+              </span>
+              <h2 className="font-serif text-3xl md:text-4xl italic text-neutral-800 font-normal">
+                Faltan sólo...
+              </h2>
+            </div>
+
+            {/* Countdown Grid */}
+            <div className="grid grid-cols-4 gap-3 sm:gap-6 max-w-xl mx-auto pt-4">
+              {/* Days */}
+              <div className="bg-white border border-[#f0e8de] rounded-xl p-3 sm:p-5 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+                <div className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#cfa461] font-medium leading-none">
+                  {timeLeft.days}
+                </div>
+                <div className="text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-neutral-500 font-sans font-bold mt-2.5">
+                  Días
+                </div>
+              </div>
+
+              {/* Hours */}
+              <div className="bg-white border border-[#f0e8de] rounded-xl p-3 sm:p-5 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+                <div className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#cfa461] font-medium leading-none">
+                  {timeLeft.hours.toString().padStart(2, '0')}
+                </div>
+                <div className="text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-neutral-500 font-sans font-bold mt-2.5">
+                  Horas
+                </div>
+              </div>
+
+              {/* Minutes */}
+              <div className="bg-white border border-[#f0e8de] rounded-xl p-3 sm:p-5 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+                <div className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#cfa461] font-medium leading-none">
+                  {timeLeft.minutes.toString().padStart(2, '0')}
+                </div>
+                <div className="text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-neutral-500 font-sans font-bold mt-2.5">
+                  Minutos
+                </div>
+              </div>
+
+              {/* Seconds */}
+              <div className="bg-white border border-[#f0e8de] rounded-xl p-3 sm:p-5 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-md">
+                <div className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#cfa461] font-medium leading-none">
+                  {timeLeft.seconds.toString().padStart(2, '0')}
+                </div>
+                <div className="text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-neutral-500 font-sans font-bold mt-2.5">
+                  Segundos
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-2">
+              <div className="h-[1px] w-20 bg-[#cfa461]/35 mt-6" />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
       {/* 2. FRASE E IMAGEN 2 */}
       <Section className="grid md:grid-cols-2 gap-16 items-center">
         <div className="order-2 md:order-1">
           <motion.div 
-            whileInView={{ clipPath: "inset(0 0 0 0)" }}
-            initial={{ clipPath: "inset(100% 0 0 0)" }}
-            transition={{ duration: 1.5 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            initial={{ y: 50, opacity: 0 }}
+            transition={{ duration: 1.2 }}
             className="aspect-[4/5] overflow-hidden rounded-sm"
           >
             <img 
@@ -612,7 +714,7 @@ export default function App() {
                 Confirmación de asistencia
               </h2>
               <p className="text-sm font-serif italic text-neutral-600 max-w-lg mx-auto leading-relaxed">
-                Tu presencia es muy importante para nosotros. Por favor, confímanos tu asistencia lo antes posible.
+                Tu presencia es muy importante para nosotros. Por favor, confirma tu asistencia.
               </p>
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#cfa461] font-bold">
                 Favor de confirmar antes del {DEFAULT_DETAILS.rsvpDeadline}
