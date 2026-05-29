@@ -10,12 +10,18 @@ import {
   MessageCircle,
   Gift,
   Shirt,
-  ChevronDown
+  ChevronDown,
+  Church,
+  Wine,
+  Utensils,
+  Home,
+  Sparkles,
+  Baby
 } from 'lucide-react';
 
 const DEFAULT_DETAILS = {
   brideName: "Claudia Galindo Estrada",
-  groomName: "Esau Calixtro Vargas",
+  groomName: "Esaú Calixtro Vargas",
   date: "Sábado, 01 de Agosto de 2026",
   time: "3:00 PM",
   churchName: "Parroquia Nuestra Señora del Rosario",
@@ -37,6 +43,8 @@ const DEFAULT_DETAILS = {
     { type: 'Liverpool', details: 'Código: 50492831' }
   ],
   whatsappRSVP: "+527791088581",
+  whatsappBride: "+527791088581",
+  whatsappGroom: "+527791088581",
   musicUrl: "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/M_1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
   images: [
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-26.jpg", // Hero
@@ -45,6 +53,39 @@ const DEFAULT_DETAILS = {
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-22.jpg"  // Final
   ]
 };
+
+const ITINERARY_ITEMS = [
+  {
+    title: "Ceremonia Religiosa",
+    time: "3:00 P.M.",
+    icon: Church,
+  },
+  {
+    title: "Recepción",
+    time: "4:50 P.M.",
+    icon: Home,
+  },
+  {
+    title: "Coctelería de Bienvenida",
+    time: "5:00 P.M.",
+    icon: Wine,
+  },
+  {
+    title: "Ceremonia Civil",
+    time: "5:30 P.M.",
+    icon: Sparkles,
+  },
+  {
+    title: "Banquete",
+    time: "6:10 P.M.",
+    icon: Utensils,
+  },
+  {
+    title: "Baile",
+    time: "7:00 P.M.",
+    icon: Music,
+  }
+];
 
 const Section = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
   <motion.section 
@@ -233,16 +274,12 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
           >
-            <span className="text-[10px] uppercase tracking-[0.8em] font-medium mb-6 block opacity-80">Save The Date</span>
             <h1 className="font-serif text-5xl md:text-7xl mb-8 leading-[1.1] text-white">
               {DEFAULT_DETAILS.brideName} 
               <span className="block text-2xl md:text-4xl italic my-4 text-[#cfa461] font-serif">&</span> 
               {DEFAULT_DETAILS.groomName}
             </h1>
-            <div className="h-px w-16 bg-[#cfa461] mx-auto mb-8" />
-            <p className="text-sm tracking-[0.4em] uppercase font-semibold opacity-90">
-              {DEFAULT_DETAILS.date}
-            </p>
+            <div className="h-px w-16 bg-[#cfa461] mx-auto opacity-40" />
           </motion.div>
         </div>
 
@@ -279,7 +316,6 @@ export default function App() {
             "{DEFAULT_DETAILS.message}"
           </p>
           <div className="pt-8 border-t border-[#cfa461]/10">
-            <h4 className="text-[10px] uppercase tracking-widest font-bold opacity-40 mb-4">Con la bendición de nuestros padres</h4>
             <div className="grid grid-cols-2 gap-4 text-xs font-serif italic">
               <div className="space-y-1">
                 {DEFAULT_DETAILS.parents.bride.map((p, i) => <p key={i}>{p}</p>)}
@@ -355,6 +391,10 @@ export default function App() {
                 <div>
                   <h3 className="text-xs uppercase tracking-widest font-bold mb-2">Código de Vestimenta</h3>
                   <p className="font-serif text-2xl">{DEFAULT_DETAILS.dressCode}</p>
+                  <div className="mt-3 space-y-1 text-xs opacity-80 leading-relaxed font-sans">
+                    <p><span className="font-bold text-[#cfa461]/90">Damas:</span> Vestido largo (no blanco, no verde, ni rojo)</p>
+                    <p><span className="font-bold text-[#cfa461]/90">Caballeros:</span> Traje formal (no azul)</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -378,6 +418,87 @@ export default function App() {
         </Section>
       </div>
 
+      {/* ITINERARIO */}
+      <Section className="py-24 max-w-4xl mx-auto">
+        <div className="text-center space-y-4 mb-20">
+          <Clock className="w-7 h-7 text-[#cfa461] mx-auto" />
+          <h2 className="font-serif text-5xl">Itinerario</h2>
+          <p className="text-sm opacity-50 max-w-sm mx-auto italic leading-relaxed">
+            Cada instante ha sido planeado con ilusión para compartirlo a su lado.
+          </p>
+        </div>
+
+        <div className="relative py-12">
+          {/* Vertical central timeline line with olive/gold shade */}
+          <div className="absolute left-[30px] md:left-1/2 top-4 bottom-4 w-[1.5px] bg-[#cfa461]/30 -translate-x-[0.75px]" />
+
+          {/* Items Container */}
+          <div className="space-y-12 md:space-y-16 relative">
+            {ITINERARY_ITEMS.map((item, idx) => {
+              const IconComponent = item.icon;
+              const isEven = idx % 2 === 0;
+              return (
+                <div key={idx} className="relative flex flex-col md:flex-row items-stretch">
+                  {/* Heart node centered on the timeline line */}
+                  <div className="absolute left-[30px] md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                    <div className="w-10 h-10 rounded-full bg-[#fcfaf7] border border-[#cfa461]/40 flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-115">
+                      <Heart className="w-3.5 h-3.5 text-[#cfa461] fill-[#cfa461]" />
+                    </div>
+                  </div>
+
+                  {/* Alternating wrapper structure */}
+                  <div className="w-full flex flex-col md:flex-row items-stretch">
+                    {/* Even indexes on Left column (Desktop), hidden on desktop for Odd indexes */}
+                    <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pr-16 flex md:justify-end text-left md:text-right ${isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
+                      <div className="flex flex-col items-start md:items-end space-y-1.5">
+                        <div className="p-4 bg-white/70 border border-[#f0e8de] rounded-full text-[#cfa461] shadow-sm hover:border-[#cfa461] transition-all duration-300">
+                          <IconComponent className="w-8 h-8 stroke-[1.2]" />
+                        </div>
+                        <div className="space-y-0.5">
+                          <h3 className="font-serif text-xl md:text-2xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
+                          <p className="font-serif text-sm text-[#cfa461] mt-0.5">{item.time}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Gap spacing on desktop */}
+                    <div className="hidden md:block w-16" />
+
+                    {/* Odd indexes on Right column (Desktop), hidden on desktop for Even indexes */}
+                    <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pl-16 flex justify-start text-left ${!isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
+                      <div className="flex flex-col items-start space-y-1.5">
+                        <div className="p-4 bg-white/70 border border-[#f0e8de] rounded-full text-[#cfa461] shadow-sm hover:border-[#cfa461] transition-all duration-300">
+                          <IconComponent className="w-8 h-8 stroke-[1.2]" />
+                        </div>
+                        <div className="space-y-0.5">
+                          <h3 className="font-serif text-xl md:text-2xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
+                          <p className="font-serif text-sm text-[#cfa461] mt-0.5">{item.time}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Section>
+
+      {/* NO NIÑOS */}
+      <Section className="py-16 max-w-2xl mx-auto px-4">
+        <div className="bg-white p-10 rounded-sm border border-[#f0e8de] text-center space-y-6 shadow-sm hover:border-[#cfa461]/40 transition-colors">
+          <div className="w-16 h-16 rounded-full bg-[#fcfaf7] border border-[#f0e8de] flex items-center justify-center text-[#cfa461] mx-auto shadow-sm">
+            <Baby className="w-8 h-8 stroke-[1.2]" />
+          </div>
+          <div className="space-y-3">
+            <h3 className="font-serif text-3xl text-neutral-800 tracking-wide font-medium">No niños</h3>
+            <p className="text-sm opacity-70 max-w-lg mx-auto italic leading-relaxed text-neutral-600 font-serif">
+              Apreciamos a tus peques, sin embargo, este evento será solo para adultos, esperamos no sea impedimento para que nos puedan acompañar.
+            </p>
+          </div>
+        </div>
+      </Section>
+
       {/* 4. MESA DE REGALOS */}
       <Section className="text-center space-y-12">
         <div className="space-y-4">
@@ -399,83 +520,142 @@ export default function App() {
         </div>
       </Section>
 
-      {/* 5. CONFIRMACIÓN E IMAGEN 4 */}
-      <div className="relative bg-[#3a3a3a] text-white py-32 overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img 
-            src={DEFAULT_DETAILS.images[3]} 
-            className="w-full h-full object-cover"
-            alt="Final background"
-            referrerPolicy="no-referrer"
-          />
-        </div>
-        
-        <Section className="relative z-10 text-center">
+      {/* 5. CONFIRMACIÓN */}
+      <div className="bg-[#fcfaf7] pt-24 pb-16 text-center">
+        <Section className="max-w-2xl mx-auto px-6 py-0">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="space-y-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
           >
-            <div className="space-y-6">
-              <h2 className="font-serif text-5xl md:text-7xl">¿Nos acompañas?</h2>
-              <p className="text-sm tracking-[0.3em] font-light opacity-60 uppercase italic">
+            <div className="space-y-4">
+              <h2 className="font-serif text-4xl md:text-5xl text-[#cfa461] italic font-normal">
+                Confirmación de asistencia
+              </h2>
+              <p className="text-sm font-serif italic text-neutral-600 max-w-lg mx-auto leading-relaxed">
+                Tu presencia es muy importante para nosotros. Por favor, confímanos tu asistencia lo antes posible.
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#cfa461] font-bold">
                 Favor de confirmar antes del {DEFAULT_DETAILS.rsvpDeadline}
               </p>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+            <div className="pt-4 flex flex-col sm:flex-row gap-6 justify-center items-center">
+              {/* Bride Button */}
               <a 
-                href={`https://wa.me/${DEFAULT_DETAILS.whatsappRSVP}?text=${encodeURIComponent('¡Hola! Me gustaría confirmar mi asistencia a su boda.')}`}
+                href={`https://wa.me/${DEFAULT_DETAILS.whatsappBride}?text=${encodeURIComponent('¡Hola Claudia! Me gustaría confirmar mi asistencia a su boda.')}`}
                 target="_blank"
-                className="w-full md:w-auto px-12 py-6 bg-[#cfa461] text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-sm hover:bg-[#b08b52] transition-all shadow-xl"
+                rel="noopener noreferrer"
+                className="inline-flex items-center group transition-all duration-300 hover:scale-105"
               >
-                Confirmar por WhatsApp
+                {/* Circle with leaf/whatsapp background */}
+                <div className="w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md relative z-20 transition-colors">
+                  <MessageCircle className="w-6 h-6 fill-white text-[#a37f45] group-hover:text-[#8f6d37]" />
+                </div>
+                {/* Pill right part */}
+                <div className="h-11 pl-8 pr-10 -ml-3 bg-[#cfa461] hover:bg-[#b08b52] rounded-r-auto rounded-3xl flex items-center justify-center text-white text-[11px] uppercase tracking-[0.15em] font-sans font-bold shadow-md relative z-10 transition-colors">
+                  Número de la novia
+                </div>
               </a>
-              
-              <div className="relative w-full md:w-auto">
-                <button 
-                  onClick={() => setShowCalendarMenu(!showCalendarMenu)}
-                  className="w-full md:w-auto px-12 py-6 border border-white/20 text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-sm hover:bg-white/10 transition-all"
-                >
-                  Añadir al Calendario
-                </button>
 
-                <AnimatePresence>
-                  {showCalendarMenu && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute bottom-full left-0 right-0 mb-4 bg-white shadow-2xl rounded-lg overflow-hidden z-50 py-2 border border-neutral-100 min-w-[200px]"
-                    >
-                      <button 
-                        onClick={() => { window.open(getCalendarLinks().google, '_blank'); setShowCalendarMenu(false); }}
-                        className="w-full px-6 py-4 text-left text-[10px] uppercase tracking-widest text-neutral-600 font-bold hover:bg-neutral-50 flex items-center gap-3 transition-colors border-b border-neutral-50"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-blue-500" /> Google Calendar
-                      </button>
-                      <button 
-                        onClick={() => { window.open(getCalendarLinks().outlook, '_blank'); setShowCalendarMenu(false); }}
-                        className="w-full px-6 py-4 text-left text-[10px] uppercase tracking-widest text-neutral-600 font-bold hover:bg-neutral-50 flex items-center gap-3 transition-colors border-b border-neutral-50"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-blue-400" /> Outlook
-                      </button>
-                      <button 
-                        onClick={() => { downloadICS(); setShowCalendarMenu(false); }}
-                        className="w-full px-6 py-4 text-left text-[10px] uppercase tracking-widest text-neutral-600 font-bold hover:bg-neutral-50 flex items-center gap-3 transition-colors"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-neutral-400" /> Apple / Otros (ICS)
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              {/* Groom Button */}
+              <a 
+                href={`https://wa.me/${DEFAULT_DETAILS.whatsappGroom}?text=${encodeURIComponent('¡Hola Esaú! Me gustaría confirmar mi asistencia a su boda.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center group transition-all duration-300 hover:scale-105"
+              >
+                {/* Circle with leaf/whatsapp background */}
+                <div className="w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md relative z-20 transition-colors">
+                  <MessageCircle className="w-6 h-6 fill-white text-[#a37f45] group-hover:text-[#8f6d37]" />
+                </div>
+                {/* Pill right part */}
+                <div className="h-11 pl-8 pr-14 -ml-3 bg-[#cfa461] hover:bg-[#b08b52] rounded-r-auto rounded-3xl flex items-center justify-center text-white text-[11px] uppercase tracking-[0.15em] font-sans font-bold shadow-md relative z-10 transition-colors">
+                  Número del novio
+                </div>
+              </a>
+            </div>
+
+
+          </motion.div>
+        </Section>
+      </div>
+
+      {/* FINAL COUPLE PHOTO WITH OVERLAY TORN EDGES */}
+      <div className="relative w-full h-[450px] md:h-[600px] overflow-hidden bg-[#fcfaf7]">
+        {/* Full-bleed Photo */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={DEFAULT_DETAILS.images[3]} 
+            className="w-full h-full object-cover object-center scale-105"
+            alt="Final landscape portrait"
+            referrerPolicy="no-referrer"
+          />
+          {/* Subtle vignette on top of the image for elegant contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/25" />
+        </div>
+
+        {/* Top Paper Tear Overlay (blends with light background above) */}
+        <div className="absolute top-0 inset-x-0 z-10 pointer-events-none select-none h-12 overflow-hidden">
+          <svg 
+            viewBox="0 0 1200 120" 
+            preserveAspectRatio="none" 
+            className="absolute inset-x-0 top-0 block w-full h-[48px] fill-[#fcfaf7]"
+            style={{ transform: 'rotate(180deg)' }}
+          >
+            <path d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" />
+          </svg>
+        </div>
+
+        {/* Bottom Paper Tear Overlay (blends with light background below) */}
+        <div className="absolute bottom-0 inset-x-0 z-10 pointer-events-none select-none h-12 overflow-hidden">
+          <svg 
+            viewBox="0 0 1200 120" 
+            preserveAspectRatio="none" 
+            className="absolute inset-x-0 bottom-0 block w-full h-[48px] fill-[#fcfaf7]"
+          >
+            <path d="M 0,22 L 12,25 L 24,20 L 36,18 L 48,15 L 60,12 L 72,16 L 84,13 L 96,18 L 108,15 L 120,21 L 132,19 L 144,24 L 156,21 L 168,26 L 180,23 L 192,28 L 204,26 L 216,31 L 228,29 L 240,34 L 252,32 L 264,37 L 276,34 L 288,38 L 300,35 L 312,39 L 324,37 L 336,41 L 348,38 L 360,42 L 372,39 L 384,41 L 396,38 L 408,39 L 420,36 L 432,37 L 444,34 L 456,33 L 468,30 L 480,28 L 492,25 L 504,26 L 516,23 L 528,21 L 540,18 L 552,19 L 564,16 L 576,14 L 588,11 L 600,13 L 612,11 L 624,14 L 636,11 L 648,15 L 660,13 L 672,17 L 684,15 L 696,20 L 708,18 L 720,22 L 732,20 L 744,25 L 756,23 L 768,28 L 780,26 L 792,31 L 804,29 L 816,33 L 828,31 L 840,35 L 852,32 L 864,36 L 876,33 L 888,35 L 900,32 L 912,33 L 924,30 L 936,28 L 948,25 L 960,23 L 972,20 L 984,21 L 996,18 L 1008,16 L 1010,13 L 1020,14 L 1030,11 L 1040,9 L 1050,6 L 1060,8 L 1070,6 L 1080,9 L 1090,6 L 1100,10 L 1110,8 L 1120,12 L 1130,10 L 1140,14 L 1150,12 L 1160,15 L 1170,12 L 1180,14 L 1190,11 L 1200,9 L 1200,120 L 0,120 Z" />
+          </svg>
+        </div>
+      </div>
+
+      {/* BEAUTIFUL CLOSING MONOGRAM & DATE SECTION */}
+      <div className="bg-[#fcfaf7] py-24 text-center">
+        <Section className="max-w-2xl mx-auto px-6 py-0">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2 }}
+            className="flex flex-col items-center justify-center space-y-10"
+          >
+            {/* Elegant foliage wreath monogram customized for light background with gold */}
+            <div className="relative flex flex-col items-center justify-center p-8 bg-white rounded-full border border-[#cfa461]/25 w-44 h-44 mx-auto shadow-sm hover:scale-105 duration-500 transition-transform">
+              <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full text-[#cfa461] fill-none stroke-current stroke-[1.2] opacity-80">
+                <circle cx="50" cy="50" r="40" strokeWidth="1" strokeDasharray="3 3 M 50,12" />
+                <path d="M 50,12 C 30,12 16,28 16,50 C 16,72 30,88 50,88 C 70,88 84,72 84,50 C 84,28 70,12 50,12" strokeWidth="1" strokeDasharray="2 1.5" />
+                {/* Handcrafted leaves on the leaf crown */}
+                <path d="M 24,30 Q 18,24 22,18 Q 28,24 24,30 Z" className="fill-[#cfa461]" />
+                <path d="M 16,45 Q 10,41 12,34 Q 18,38 16,45 Z" className="fill-[#cfa461]" />
+                <path d="M 17,55 Q 11,60 14,67 Q 20,62 17,55 Z" className="fill-[#cfa461]" />
+                <path d="M 26,71 Q 20,77 25,83 Q 31,77 26,71 Z" className="fill-[#cfa461]" />
+                <path d="M 76,30 Q 82,24 78,18 Q 72,24 76,30 Z" className="fill-[#cfa461]" />
+                <path d="M 84,45 Q 90,41 88,34 Q 82,38 84,45 Z" className="fill-[#cfa461]" />
+                <path d="M 83,55 Q 89,60 86,67 Q 80,62 83,55 Z" className="fill-[#cfa461]" />
+                <path d="M 74,71 Q 80,77 75,83 Q 69,77 74,71 Z" className="fill-[#cfa461]" />
+              </svg>
+              <div className="text-center z-10 space-y-1">
+                <p className="font-serif text-3xl tracking-wider text-[#a37f45] font-medium flex items-center justify-center gap-1">
+                  C <span className="text-xl text-[#cfa461]">♥</span> E
+                </p>
               </div>
             </div>
 
-            <div className="pt-24 opacity-30 flex flex-col items-center gap-6">
-               <div className="h-px w-20 bg-white" />
-               <p className="font-serif text-2xl italic">Claudia & Esau</p>
-               <p className="text-[9px] tracking-[0.5em] uppercase">Agosto 2026</p>
+            <div className="space-y-4">
+              <p className="font-serif text-3xl md:text-4xl italic tracking-wide text-neutral-800 font-medium">Claudia & Esaú</p>
+              <div className="h-px w-16 bg-[#cfa461] mx-auto opacity-70" />
+              <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-[#cfa461] font-bold">{DEFAULT_DETAILS.date}</p>
             </div>
           </motion.div>
         </Section>
