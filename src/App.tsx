@@ -35,7 +35,7 @@ const DEFAULT_DETAILS = {
   brideName: "Claudia Galindo Estrada",
   groomName: "Esaú Calixtro Vargas",
   date: "Sábado, 01 de Agosto de 2026",
-  time: "3:00 PM",
+  time: "04:50 PM",
   churchName: "Parroquia Nuestra Señora del Rosario",
   churchAddress: "Av. Hidalgo 9, Centro, 42130 Mineral del Monte, Hgo.",
   churchMapsUrl: "https://maps.app.goo.gl/HLdHKna6ZjZGibQ67", // REEMPLAZA CON EL LINK DE LA IGLESIA
@@ -54,12 +54,14 @@ const DEFAULT_DETAILS = {
   liverpoolUrl: "https://mesaderegalos.liverpool.com.mx/milistaderegalos/52010923/", // REEMPLAZA CON EL EL LINK DIRECTO A TU MESA DE REGALOS (ej. https://mesaderegalos.liverpool.com.mx/m/evento-claudia-y-esau)
   whatsappBride: "+527791088581",
   whatsappGroom: "+527711958350",
+  whatsappCabins: "+527711200000", // REEMPLAZA CON EL NÚMERO DE WHATSAPP PARA LA RESERVACIÓN DE LAS CABAÑAS (ej. "Desarrollo turístico los arcos")
   musicUrl: "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/M_1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
   images: [
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-26.jpg", // Hero
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-6.jpg", // Story
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_27.jpg", // Details
-    "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_28.jpg"  // Final
+    "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_28.jpg",  // Final
+    "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=1200" // Cabañas sugerencia (REEMPLAZAR CON LA IMAGEN REAL)
   ]
 };
 
@@ -357,9 +359,6 @@ export default function App() {
           >
             <div className="flex flex-col items-center">
               <div className="h-[1px] w-20 bg-[#cfa461]/35 mb-6" />
-              <span className="text-[#cfa461] text-[11px] uppercase tracking-[0.35em] font-sans font-bold mb-3 block">
-                Comienza la cuenta regresiva
-              </span>
               <h2 className="font-serif text-3xl md:text-4xl italic text-neutral-800 font-normal">
                 Faltan sólo...
               </h2>
@@ -714,7 +713,7 @@ export default function App() {
                 Confirmación de asistencia
               </h2>
               <p className="text-sm font-serif italic text-neutral-600 max-w-lg mx-auto leading-relaxed">
-                Tu presencia es muy importante para nosotros. Por favor, confirma tu asistencia.
+                Tu presencia es muy importante para nosotros.
               </p>
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#cfa461] font-bold">
                 Favor de confirmar antes del {DEFAULT_DETAILS.rsvpDeadline}
@@ -840,6 +839,73 @@ export default function App() {
             />
           </svg>
         </div>
+      </div>
+
+      {/* SUGERENCIA DE HOSPEDAJE */}
+      <div className="bg-[#fcfaf7] pt-24 pb-8 text-center">
+        <Section className="max-w-2xl mx-auto px-6 py-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <Home className="w-8 h-8 text-[#cfa461] stroke-[1.2]" />
+              <h2 className="font-serif text-3xl md:text-4xl text-[#cfa461] italic font-normal">
+                Sugerencia de Hospedaje
+              </h2>
+              <p className="text-sm font-serif italic text-neutral-600 max-w-lg mx-auto leading-relaxed">
+                Si optaste por acompañarnos a nuestra celebración y en tus planes está hospedarte cerca de la hacienda Real de Velasco, te sugerimos el siguiente complejo de cabañas:
+              </p>
+              
+              <div className="bg-white rounded-2xl border border-[#f5ece0] shadow-sm max-w-md w-full overflow-hidden transition-all duration-300 hover:shadow-md hover:scale-[1.01] group">
+                {/* Image of the lodging */}
+                <div className="aspect-[16/10] w-full overflow-hidden relative">
+                  <img 
+                    src={DEFAULT_DETAILS.images[4]} 
+                    alt="Sugerencia de Hospedaje" 
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-black/5" />
+                </div>
+                
+                <div className="p-6 space-y-3">
+                  <p className="font-serif text-lg text-neutral-800 font-medium">
+                    "Desarrollo turístico los arcos"
+                  </p>
+                  <div className="h-[1px] w-12 bg-[#cfa461]/35 mx-auto" />
+                  <p className="text-xs text-neutral-500 font-sans tracking-wide">
+                    Al momento de realizar tu reservación menciona el siguiente código:
+                  </p>
+                  <p className="text-sm font-sans font-bold text-[#cfa461] bg-[#fcfaf7] py-2 px-4 rounded-lg inline-block border border-[#f5ece0]">
+                    C&E 01/08/26
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 flex justify-center items-center px-4">
+              {/* WhatsApp Button */}
+              <a 
+                href={getWhatsAppLink(DEFAULT_DETAILS.whatsappCabins, '¡Hola! Me gustaría realizar una reservación en las cabañas "Desarrollo turístico los arcos" con el código C&E 01/08/26.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative group inline-flex items-center w-full md:w-[280px] h-14 hover:scale-105 transition-all duration-300"
+              >
+                {/* Circle on the left */}
+                <div className="absolute left-0 w-14 h-14 rounded-full bg-[#a37f45] group-hover:bg-[#8f6d37] flex items-center justify-center text-white shadow-md z-20 transition-all duration-300 border-2 border-white">
+                  <WhatsAppIcon className="w-[21px] h-6 text-white" />
+                </div>
+                {/* Pill on the right */}
+                <div className="w-full h-11 pl-16 pr-[20px] ml-3 bg-[#cfa461] group-hover:bg-[#b08b52] rounded-full flex items-center justify-center text-white text-[11px] uppercase tracking-[0.18em] font-sans font-bold shadow-md z-10 transition-colors">
+                  Contactar por WhatsApp
+                </div>
+              </a>
+            </div>
+          </motion.div>
+        </Section>
       </div>
 
       {/* BEAUTIFUL CLOSING MONOGRAM & DATE SECTION */}
