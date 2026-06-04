@@ -43,7 +43,7 @@ const DEFAULT_DETAILS = {
   location: "Hacienda Real de Velasco",
   venueMapsUrl: "https://maps.app.goo.gl/jXMSx9vsgomciXHG7", // REEMPLAZA CON EL LINK DEL SALÓN
   address: "DE VELASCO #S/N, Centro, 43560 Omitlán de Juárez, Hgo.",
-  message: "Con la bendición de Dios y de nuestros padres, tenemos el honor de invitarte a celebrar nuestro amor.",
+  message: "Con la bendición de nuestros padres, tenemos el honor de invitarte a celebrar nuestro amor.",
   rsvpDeadline: "25 de junio",
   parents: {
     bride: ["Sr. Armando Galindo Cervantes", "Sra. Lucero Estrada Sandoval"],
