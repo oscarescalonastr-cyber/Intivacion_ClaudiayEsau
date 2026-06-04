@@ -104,7 +104,7 @@ const Section = ({ children, className = "" }: { children: ReactNode; className?
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-100px" }}
     transition={{ duration: 1, ease: "easeOut" }}
-    className={`py-20 px-6 max-w-5xl mx-auto w-full ${className}`}
+    className={`py-10 md:py-12 px-6 max-w-5xl mx-auto w-full ${className}`}
   >
     {children}
   </motion.section>
@@ -348,18 +348,18 @@ export default function App() {
       </header>
 
       {/* CONTADOR DE TIEMPO (COUNTDOWN) - OPCIÓN 2 */}
-      <div className="bg-[#fcfaf7] pt-24 pb-12">
+      <div className="bg-[#fcfaf7] pt-14 pb-8">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="space-y-8"
+            className="space-y-6"
           >
             <div className="flex flex-col items-center">
-              <div className="h-[1px] w-20 bg-[#cfa461]/35 mb-6" />
-              <h2 className="font-serif text-3xl md:text-4xl italic text-neutral-800 font-normal">
+              <div className="h-[1px] w-20 bg-[#cfa461]/35 mb-4" />
+              <h2 className="font-serif text-2xl md:text-3xl italic text-neutral-800 font-normal">
                 Faltan sólo...
               </h2>
             </div>
@@ -407,15 +407,15 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flex justify-center pt-2">
-              <div className="h-[1px] w-20 bg-[#cfa461]/35 mt-6" />
+            <div className="flex justify-center pt-1 animate-pulse">
+              <div className="h-[1px] w-20 bg-[#cfa461]/35 mt-3" />
             </div>
           </motion.div>
         </div>
       </div>
 
       {/* 2. FRASE E IMAGEN 2 */}
-      <Section className="grid md:grid-cols-2 gap-16 items-center">
+      <Section className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div className="order-2 md:order-1">
           <motion.div 
             whileInView={{ y: 0, opacity: 1 }}
@@ -431,13 +431,13 @@ export default function App() {
             />
           </motion.div>
         </div>
-        <div className="order-1 md:order-2 space-y-8 text-center md:text-left">
+        <div className="order-1 md:order-2 space-y-5 text-center md:text-left">
           <Heart className="w-6 h-6 text-[#cfa461] mx-auto md:mx-0" />
-          <h2 className="font-serif text-4xl leading-tight">Cada aventura comienza con un sí.</h2>
-          <p className="font-serif text-xl italic opacity-60 leading-relaxed">
+          <h2 className="font-serif text-3xl md:text-4xl leading-tight">Cada aventura comienza con un sí.</h2>
+          <p className="font-serif text-lg md:text-xl italic opacity-60 leading-relaxed">
             "{DEFAULT_DETAILS.message}"
           </p>
-          <div className="pt-8 border-t border-[#cfa461]/10">
+          <div className="pt-5 border-t border-[#cfa461]/10">
             <div className="grid grid-cols-2 gap-4 text-xs font-serif italic">
               <div className="space-y-1">
                 {DEFAULT_DETAILS.parents.bride.map((p, i) => <p key={i}>{p}</p>)}
@@ -451,15 +451,15 @@ export default function App() {
       </Section>
 
       {/* 3. DETALLES E IMAGEN 3 */}
-      <div className="bg-[#f7f2ed] py-24">
-        <Section className="grid md:grid-cols-2 gap-20 items-center">
-          <div className="space-y-12">
-            <div className="space-y-4">
+      <div className="bg-[#f7f2ed] py-14 md:py-16">
+        <Section className="grid md:grid-cols-2 gap-10 md:gap-14 items-center !py-0">
+          <div className="space-y-8">
+            <div className="space-y-3">
               <span className="text-[#cfa461] text-xs uppercase tracking-[0.4em] font-bold">Dónde & Cuándo</span>
-              <h2 className="font-serif text-5xl">La Celebración</h2>
+              <h2 className="font-serif text-3xl md:text-4xl">La Celebración</h2>
             </div>
             
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div className="flex gap-6 items-start">
                 <Calendar className="w-6 h-6 text-[#cfa461] mt-1 shrink-0" />
                 <div>
@@ -541,10 +541,10 @@ export default function App() {
       </div>
 
       {/* ITINERARIO */}
-      <Section className="py-24 max-w-4xl mx-auto">
-        <div className="text-center space-y-4 mb-20">
+      <Section className="!py-12 md:!py-16 max-w-4xl mx-auto">
+        <div className="text-center space-y-3 mb-10 md:mb-12">
           <Clock className="w-7 h-7 text-[#cfa461] mx-auto" />
-          <h2 className="font-serif text-5xl">Itinerario</h2>
+          <h2 className="font-serif text-3xl md:text-4xl">Itinerario</h2>
           <p className="text-sm opacity-50 max-w-sm mx-auto italic leading-relaxed">
             Cada instante ha sido planeado con ilusión para compartirlo a su lado.
           </p>
@@ -597,7 +597,7 @@ export default function App() {
       </Section>
 
       {/* NO NIÑOS */}
-      <Section className="py-10 max-w-lg mx-auto px-4">
+      <Section className="!py-4 max-w-lg mx-auto px-4">
         <div className="bg-[#fcfaf7] p-6 rounded-xl border border-[#f5ece0] text-center space-y-4 shadow-sm hover:border-[#cfa461]/35 hover:bg-[#faf6f0] transition-all duration-500 relative overflow-hidden group">
           {/* Subtle elegant corners */}
           <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-[#cfa461]/30 rounded-tl pointer-events-none" />
@@ -618,10 +618,10 @@ export default function App() {
       </Section>
 
       {/* 4. MESA DE REGALOS */}
-      <Section className="text-center space-y-12">
-        <div className="space-y-4">
+      <Section className="text-center space-y-8 !py-12 md:!py-16">
+        <div className="space-y-3">
           <Gift className="w-7 h-7 text-[#cfa461] mx-auto" />
-          <h2 className="font-serif text-5xl">Mesa de Regalos</h2>
+          <h2 className="font-serif text-3xl md:text-4xl">Mesa de Regalos</h2>
           <p className="text-sm opacity-60 max-w-sm mx-auto italic leading-relaxed text-neutral-600 font-serif">
             Agradecemos mucho su cariño y buenos deseos. Si desean tener un detalle con nosotros, ponemos a su disposición nuestra mesa de regalos:
           </p>
@@ -700,16 +700,16 @@ export default function App() {
       </Section>
 
       {/* 5. CONFIRMACIÓN */}
-      <div className="bg-[#fcfaf7] pt-24 pb-16 text-center">
-        <Section className="max-w-2xl mx-auto px-6 py-0">
+      <div className="bg-[#fcfaf7] pt-16 pb-12 text-center">
+        <Section className="max-w-2xl mx-auto px-6 !py-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-6"
           >
-            <div className="space-y-4">
-              <h2 className="font-serif text-4xl md:text-5xl text-[#cfa461] italic font-normal">
+            <div className="space-y-3">
+              <h2 className="font-serif text-3xl md:text-4xl text-[#cfa461] italic font-normal">
                 Confirmación de asistencia
               </h2>
               <p className="text-sm font-serif italic text-neutral-600 max-w-lg mx-auto leading-relaxed">
@@ -842,15 +842,15 @@ export default function App() {
       </div>
 
       {/* SUGERENCIA DE HOSPEDAJE */}
-      <div className="bg-[#fcfaf7] pt-24 pb-8 text-center">
-        <Section className="max-w-2xl mx-auto px-6 py-0">
+      <div className="bg-[#fcfaf7] pt-16 pb-6 text-center">
+        <Section className="max-w-2xl mx-auto px-6 !py-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-6"
           >
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-3">
               <Home className="w-8 h-8 text-[#cfa461] stroke-[1.2]" />
               <h2 className="font-serif text-3xl md:text-4xl text-[#cfa461] italic font-normal">
                 Sugerencia de Hospedaje
@@ -909,14 +909,14 @@ export default function App() {
       </div>
 
       {/* BEAUTIFUL CLOSING MONOGRAM & DATE SECTION */}
-      <div className="bg-[#fcfaf7] py-24 text-center">
-        <Section className="max-w-2xl mx-auto px-6 py-0">
+      <div className="bg-[#fcfaf7] py-10 md:py-14 text-center">
+        <Section className="max-w-2xl mx-auto px-6 !py-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2 }}
-            className="flex flex-col items-center justify-center space-y-10"
+            className="flex flex-col items-center justify-center space-y-6"
           >
             {/* Elegant foliage wreath monogram customized for light background with gold */}
             <div className="relative flex flex-col items-center justify-center p-8 bg-white rounded-full border border-[#cfa461]/25 w-44 h-44 mx-auto shadow-sm hover:scale-105 duration-500 transition-transform">
