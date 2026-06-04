@@ -304,7 +304,7 @@ export default function App() {
       </button>
 
       {/* 1. HERO - IMAGEN 1 */}
-      <header className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center">
+      <header className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-end md:items-center justify-center pb-32 md:pb-0">
         <motion.div 
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
@@ -322,16 +322,16 @@ export default function App() {
           {/* Degradado negro profundo de arriba hacia abajo */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
         </motion.div>
-
+ 
         <div className="relative z-10 text-center px-6 text-white text-shadow-sm">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
           >
-            <h1 className="font-serif text-5xl md:text-7xl mb-8 leading-[1.1] text-white">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-7xl mb-6 md:mb-8 leading-[1.2] text-white">
               {DEFAULT_DETAILS.brideName} 
-              <span className="block text-2xl md:text-4xl italic my-4 text-[#cfa461] font-serif">&</span> 
+              <span className="block text-xl md:text-4xl italic my-3 md:my-4 text-[#cfa461] font-serif">&</span> 
               {DEFAULT_DETAILS.groomName}
             </h1>
             <div className="h-px w-16 bg-[#cfa461] mx-auto opacity-40" />
