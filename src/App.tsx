@@ -54,14 +54,14 @@ const DEFAULT_DETAILS = {
   liverpoolUrl: "https://mesaderegalos.liverpool.com.mx/milistaderegalos/52010923/", // REEMPLAZA CON EL EL LINK DIRECTO A TU MESA DE REGALOS (ej. https://mesaderegalos.liverpool.com.mx/m/evento-claudia-y-esau)
   whatsappBride: "+527791088581",
   whatsappGroom: "+527711958350",
-  whatsappCabins: "+527711200000", // REEMPLAZA CON EL NÚMERO DE WHATSAPP PARA LA RESERVACIÓN DE LAS CABAÑAS (ej. "Desarrollo turístico los arcos")
+  whatsappCabins: "+527716900871", // REEMPLAZA CON EL NÚMERO DE WHATSAPP PARA LA RESERVACIÓN DE LAS CABAÑAS (ej. "Desarrollo turístico los arcos")
   musicUrl: "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/M_1.mp3", // REEMPLAZA ESTE LINK CON TU CANCIÓN
   images: [
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-26.jpg", // Hero
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/C%26E_-6.jpg", // Story
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_27.jpg", // Details
     "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_28.jpg",  // Final
-    "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=1200" // Cabañas sugerencia (REEMPLAZAR CON LA IMAGEN REAL)
+    "https://sagaonmedia.s3.us-east-2.amazonaws.com/website/machines_projects/CYE/CyE_29.jpg" // Cabañas sugerencia
   ]
 };
 
