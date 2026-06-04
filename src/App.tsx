@@ -909,33 +909,43 @@ export default function App() {
       </div>
 
       {/* BEAUTIFUL CLOSING MONOGRAM & DATE SECTION */}
-      <div className="bg-[#fcfaf7] py-24 text-center">
+      <div className="bg-[#efe8df] py-24 text-center border-t border-[#cfa461]/10">
         <Section className="max-w-2xl mx-auto px-6 py-0">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2 }}
-            className="flex flex-col items-center justify-center space-y-10"
+            className="flex flex-col items-center justify-center"
           >
-            {/* Elegant foliage wreath monogram customized for light background with gold */}
-            <div className="relative flex flex-col items-center justify-center p-8 bg-white rounded-full border border-[#cfa461]/25 w-44 h-44 mx-auto shadow-sm hover:scale-105 duration-500 transition-transform">
-              <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full text-[#cfa461] fill-none stroke-current stroke-[1.2] opacity-80">
-                <circle cx="50" cy="50" r="40" strokeWidth="1" strokeDasharray="3 3 M 50,12" />
-                <path d="M 50,12 C 30,12 16,28 16,50 C 16,72 30,88 50,88 C 70,88 84,72 84,50 C 84,28 70,12 50,12" strokeWidth="1" strokeDasharray="2 1.5" />
-                {/* Handcrafted leaves on the leaf crown */}
-                <path d="M 24,30 Q 18,24 22,18 Q 28,24 24,30 Z" className="fill-[#cfa461]" />
-                <path d="M 16,45 Q 10,41 12,34 Q 18,38 16,45 Z" className="fill-[#cfa461]" />
-                <path d="M 17,55 Q 11,60 14,67 Q 20,62 17,55 Z" className="fill-[#cfa461]" />
-                <path d="M 26,71 Q 20,77 25,83 Q 31,77 26,71 Z" className="fill-[#cfa461]" />
-                <path d="M 76,30 Q 82,24 78,18 Q 72,24 76,30 Z" className="fill-[#cfa461]" />
-                <path d="M 84,45 Q 90,41 88,34 Q 82,38 84,45 Z" className="fill-[#cfa461]" />
-                <path d="M 83,55 Q 89,60 86,67 Q 80,62 83,55 Z" className="fill-[#cfa461]" />
-                <path d="M 74,71 Q 80,77 75,83 Q 69,77 74,71 Z" className="fill-[#cfa461]" />
-              </svg>
-              <div className="text-center z-10 space-y-1">
-                <p className="font-serif text-3xl tracking-wider text-[#a37f45] font-medium flex items-center justify-center gap-1">
-                  C <span className="text-xl text-[#cfa461]">♥</span> E
+            {/* High-end stationery style intertwined monogram in AJ style - with no surrounding card box */}
+            <div className="space-y-8 max-w-sm w-full mx-auto">
+              {/* Intertwined Letters Area (Smaller and cleaner) */}
+              <div className="relative w-36 h-36 mx-auto flex items-center justify-center select-none">
+                {/* Letter C (Higher and slightly left) */}
+                <span className="absolute top-1 left-5 font-serif text-[80px] leading-none text-neutral-800 font-extralight tracking-tight opacity-95 select-none">
+                  C
+                </span>
+                
+                {/* Elegant Connecting Ampersand (Right in the middle, gold/champagne color) */}
+                <span className="absolute top-[26px] left-[36px] font-script text-[85px] leading-none text-[#cfa461] opacity-95 select-none transform rotate-[-8deg] z-10 filter drop-shadow-[0_1.5px_2px_rgba(239,232,223,0.9)]">
+                  &
+                </span>
+                
+                {/* Letter E (Lower and slightly right) */}
+                <span className="absolute bottom-1 right-5 font-serif text-[80px] leading-none text-neutral-800 font-extralight tracking-tight opacity-95 select-none">
+                  E
+                </span>
+              </div>
+              
+              {/* Names and Date styled beautifully */}
+              <div className="text-center space-y-2.5 z-10 w-full">
+                <h3 className="font-serif text-xl tracking-[0.16em] text-[#a37f45] font-light uppercase">
+                  Claudia &amp; Esaú
+                </h3>
+                <div className="h-[1px] w-12 bg-[#cfa461]/25 mx-auto" />
+                <p className="text-[10px] tracking-[0.4em] text-neutral-500 uppercase font-serif italic mt-1">
+                  01 . 08 . 2026
                 </p>
               </div>
             </div>
@@ -944,7 +954,7 @@ export default function App() {
       </div>
 
       {/* Footer minimal */}
-      <footer className="py-8 text-center text-[9px] uppercase tracking-[0.3em] opacity-30 bg-[#fcfaf7]">
+      <footer className="py-12 text-center text-[10px] uppercase tracking-[0.35em] text-[#a37f45]/70 bg-[#efe8df] font-sans font-bold border-t border-[#cfa461]/5">
         Hecho con amor para nuestra familia y amigos
       </footer>
     </div>
