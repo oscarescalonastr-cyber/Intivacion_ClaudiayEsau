@@ -437,8 +437,11 @@ export default function App() {
           <p className="font-serif text-lg md:text-xl italic opacity-60 leading-relaxed">
             "{DEFAULT_DETAILS.message}"
           </p>
-          <div className="pt-5 border-t border-[#cfa461]/10">
-            <div className="grid grid-cols-2 gap-4 text-xs font-serif italic">
+          <div className="pt-5 border-t border-[#cfa461]/10 space-y-3">
+            <span className="text-[#cfa461] text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-bold block text-neutral-500">
+              Nuestros Padres
+            </span>
+            <div className="grid grid-cols-2 gap-4 text-xs font-serif italic text-neutral-700">
               <div className="space-y-1">
                 {DEFAULT_DETAILS.parents.bride.map((p, i) => <p key={i}>{p}</p>)}
               </div>
