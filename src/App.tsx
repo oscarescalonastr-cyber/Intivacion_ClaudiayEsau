@@ -92,9 +92,10 @@ const ITINERARY_ITEMS = [
     icon: Utensils,
   },
   {
-    title: "Baile",
+    title: "Baile con:",
     time: "7:00 P.M.",
     icon: Music,
+    description: "Trio Huapangueros de Aguascalientes y Grupo Musical Cognac"
   }
 ];
 
@@ -575,9 +576,12 @@ export default function App() {
                   <div className="w-full flex flex-col md:flex-row items-center">
                     {/* Even indexes on Left column (Desktop), hidden on desktop for Odd indexes */}
                     <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pr-14 flex md:justify-end text-left md:text-right ${isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
-                      <div className="space-y-0.5">
+                      <div className="space-y-1">
                         <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-[#cfa461] font-bold">{item.time}</p>
                         <h3 className="font-serif text-lg md:text-xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
+                        {item.description && (
+                          <p className="font-sans text-xs text-neutral-500 mt-1 max-w-xs md:ml-auto leading-relaxed">{item.description}</p>
+                        )}
                       </div>
                     </div>
 
@@ -586,9 +590,12 @@ export default function App() {
 
                     {/* Odd indexes on Right column (Desktop), hidden on desktop for Even indexes */}
                     <div className={`w-full md:w-1/2 pl-[70px] md:pl-0 md:pl-14 flex justify-start text-left ${!isEven ? 'block' : 'hidden md:block md:opacity-0 md:pointer-events-none'}`}>
-                      <div className="space-y-0.5">
+                      <div className="space-y-1">
                         <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-[#cfa461] font-bold">{item.time}</p>
                         <h3 className="font-serif text-lg md:text-xl text-neutral-800 font-medium tracking-wide">{item.title}</h3>
+                        {item.description && (
+                          <p className="font-sans text-xs text-neutral-500 mt-1 max-w-xs leading-relaxed">{item.description}</p>
+                        )}
                       </div>
                     </div>
                   </div>
